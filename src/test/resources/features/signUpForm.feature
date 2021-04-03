@@ -2,7 +2,6 @@ Feature: SignUp
   As a user
   I want to sign up for Mailchimps webservice
 
-  @success
   Scenario Outline: Filling in the sign up form field
     Given I open up "<browser>" as browser
     And Navigate to Sign up page
