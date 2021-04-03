@@ -6,9 +6,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import utilBeans.SignUpPageElements;
+import utilBeans.SignUpPageErrors;
 import utilBeans.SignUpTextUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -19,7 +21,7 @@ public class SignUpStepDefinitions {
     public static long implicitWait = 10;
     private WebDriver driver;
     private SignUpPageElements signUpPageElements;
-
+    SignUpPageErrors signUpPageErrors = new SignUpPageErrors();
     SignUpTextUtils signUpTextUtils = new SignUpTextUtils();
 
     @Given("I open up {string} as browser")
@@ -76,6 +78,31 @@ public class SignUpStepDefinitions {
 
     @Then("I should either fail or successfully be signed up")
     public void i_should_either_fail_or_successfully_be_signed_up() {
+
+        String successPath = driver.getTitle();
+
+        if (successPath.equals("Success | Mailchimp")) {
+            Assert.assertEquals("Success | Mailchimp", successPath);
+            System.out.println("Success");
+
+        } else if (signUpPageErrors.errorEmail(driver) != null) {
+
+            System.out.println("no-email-error");
+            Assert.assertEquals("Please enter a value", signUpPageErrors.errorEmail(driver).getText());
+
+        } else if (signUpPageErrors.errorTooLongUsername(driver).equals("Enter a value less than 100 characters long")) {
+
+            System.out.println("too-Long-Username");
+            Assert.assertEquals("Enter a value less than 100 characters long", signUpPageErrors.errorTooLongUsername(driver));
+
+        } else if (signUpPageErrors.takenUsername(driver) != null) {
+
+            System.out.println("taken-username");
+            Assert.assertEquals("Another user with this username already exists. Maybe it's your evil twin. Spooky.", signUpPageErrors.takenUsername(driver));
+
+        } else {
+            System.out.println("some-other-error");
+        }
     }
 
     @After
