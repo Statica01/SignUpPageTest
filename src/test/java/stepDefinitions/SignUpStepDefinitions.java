@@ -13,12 +13,8 @@ import utilBeans.SignUpPageElements;
 import utilBeans.SignUpPageErrors;
 import utilBeans.SignUpTextUtils;
 
-import java.util.concurrent.TimeUnit;
-
 public class SignUpStepDefinitions {
 
-
-    public static long implicitWait = 10;
     private WebDriver driver;
     private SignUpPageElements signUpPageElements;
     SignUpPageErrors signUpPageErrors = new SignUpPageErrors();
@@ -40,7 +36,7 @@ public class SignUpStepDefinitions {
         System.out.println("Before ... Opening SignUp page");
     }
 
-    @When("I enter {string} into the email form field")
+    @And("I enter {string} into the email form field")
     public void i_enter_email_into_the_email_form_field(String email) {
 
         if (email.equals("")) {
@@ -67,13 +63,13 @@ public class SignUpStepDefinitions {
     public void enter_password_into_the_password_form_field(String password) {
 
         signUpPageElements.getPassword(password);
-        driver.manage().timeouts().implicitlyWait(SignUpStepDefinitions.implicitWait, TimeUnit.SECONDS);
     }
 
     @When("I click on the signUp button")
     public void i_click_on_the_signUp_button() {
 
-        signUpPageElements.clickSubmit();
+        signUpPageElements.submitButton();
+
     }
 
     @Then("I should either fail or successfully be signed up")
@@ -111,5 +107,6 @@ public class SignUpStepDefinitions {
         System.out.println("After List is done ...");
         driver.quit();
     }
+
 }
 

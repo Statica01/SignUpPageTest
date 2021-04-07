@@ -3,9 +3,13 @@ package utilBeans;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignUpPageElements {
+
     WebDriver driver;
+    WebDriverWait wait;
 
     @FindBy(id = "create-account")
     private WebElement signUpButton;
@@ -21,11 +25,7 @@ public class SignUpPageElements {
 
     public SignUpPageElements(WebDriver driver) {
         this.driver = driver;
-
-    }
-
-    public void clickSubmit() {
-        signUpButton.submit();
+        wait = new WebDriverWait(driver, 5);
     }
 
     public void getUsername(String username) {
@@ -37,7 +37,14 @@ public class SignUpPageElements {
     }
 
     public void getPassword(String password) {
-        passwordField.sendKeys(password + "!" + "A");
+        passwordField.sendKeys(password + "3A!");
     }
 
+    public void submitButton() {
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(signUpButton)).submit();
+    }
 }
+
+

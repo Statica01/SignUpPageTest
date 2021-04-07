@@ -7,11 +7,11 @@ public class SignUpTextUtils {
 
     //random string builder to create too long username
     public String generateRandomString(int length) {
-        String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
-        String CHAR_UPPER = CHAR_LOWER.toUpperCase();
-        String NUMBER = "0123456789";
+        String char_lower = "abcdefghijklmnopqrstuvwxyz";
+        String char_upper = char_lower.toUpperCase();
+        String number = "0123456789";
 
-        String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
+        String dataForRandomString = char_lower + char_upper + number;
         SecureRandom random = new SecureRandom();
 
         if (length < 1) throw new IllegalArgumentException();
@@ -20,8 +20,8 @@ public class SignUpTextUtils {
 
         for (int i = 0; i < length; i++) {
 
-            int randomCharAt = random.nextInt(DATA_FOR_RANDOM_STRING.length());
-            char randomChar = DATA_FOR_RANDOM_STRING.charAt(randomCharAt);
+            int randomCharAt = random.nextInt(dataForRandomString.length());
+            char randomChar = dataForRandomString.charAt(randomCharAt);
 
             randomStringBuilder.append(randomChar);
         }
